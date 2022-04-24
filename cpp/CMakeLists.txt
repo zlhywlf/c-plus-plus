@@ -1,0 +1,5 @@
+project(cpp)
+set(CMAKE_CXX_STANDARD 14)
+add_executable(${PROJECT_NAME} main.cpp src/hello.cpp include/hello.h)
+include_directories(include)
+aux_source_directory(src DIR_SRC)
