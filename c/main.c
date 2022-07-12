@@ -5,6 +5,8 @@
 
 #include <stdlib.h>
 #include "hello.h"
+#include "JsonUtil.h"
+
 
 // argc命令行参数的数量,包括程序名本身
 // 命令行参数的指针数组
@@ -28,6 +30,7 @@ int main(int argc, char *argv[]) {
     printf(s);
     printf("compiled on %s as %s\n", __DATE__, __TIME__);
     printf("%s called\n", __func__);
+    printf("%d\n",IS_NULL);
 #ifdef DEBUG
     printf("DEBUG");
 #endif //DEBUG
