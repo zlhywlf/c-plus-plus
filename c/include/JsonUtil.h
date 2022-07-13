@@ -20,48 +20,41 @@ typedef enum JsonType {
     IS_ARRAY,
     IS_OBJECT
 } JsonType;
-
+typedef union Value {
+    struct JsonObj *child;
+    char *string;
+    double number;
+} Value;
 /**
  * json对象
  */
-typedef struct JsonUtil {
-    /**
-     * 链表
-     */
-    struct JsonUtil *next;
-    struct JsonUtil *prev;
-    /**
-     * 类型
-     */
+typedef struct JsonObj {
+    struct JsonObj *next;
+    struct JsonObj *prev;
     JsonType type;
-    /**
-    * 键
-    */
     char *key;
-    /**
-    * 值
-    */
-    union {
-        /**
-         * 数组或者对象
-         */
-        struct JsonUtil *child;
-        /**
-         * 字符串
-         */
-        char *valueString;
-        /**
-         * 数字
-         */
-        double number;
-    } *value;
-} JsonUtil;
+    Value *value;
+} JsonObj;
 
-/**
- * 内部钩子
- */
-static void *(*jsonUtilMalloc)(size_t sz) = malloc;
 
-static void (*jsonUtilFree)(void *ptr) = free;
+JsonObj *jsonObjParse(const char *jsonStr);
+
+JsonObj *jsonObjCreateObject(void);
+
+JsonObj *jsonObjCreateArray(void);
+
+JsonObj *jsonObjCreateNull(void);
+
+JsonObj *jsonObjCreateString(const char *string);
+
+JsonObj *jsonObjCreateNumber(double number);
+
+JsonObj *jsonObjCreateBool(int bool);
+
+void jsonObjAddItemToObject(JsonObj *object, char *key, JsonObj *item);
+
+void jsonObjAddItemToArray(JsonObj *array, JsonObj *item);
+
+char *jsonObjPrint(JsonObj *jsonObj);
 
 #endif //C_PLUS_PLUS_JSON_UTIL_H
